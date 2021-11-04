@@ -1,12 +1,9 @@
-package com.example.axon.demo.service;
+package com.axonactive.demo_spring.service;
 
-import com.example.axon.demo.entity.Department;
-import com.example.axon.demo.entity.ReponseObject;
-import com.example.axon.demo.service.dto.DepartmentDTO;
-import org.springframework.data.repository.Repository;
+import com.axonactive.demo_spring.entity.Department;
+import com.axonactive.demo_spring.entity.ReponseObject;
+import com.axonactive.demo_spring.service.dto.DepartmentDTO;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface DepartmentService {
     ResponseEntity<ReponseObject>  getAllDepartment();

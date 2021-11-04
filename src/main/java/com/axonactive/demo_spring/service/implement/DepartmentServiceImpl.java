@@ -1,10 +1,10 @@
-package com.example.axon.demo.service.implement;
+package com.axonactive.demo_spring.service.implement;
 
-import com.example.axon.demo.entity.Department;
-import com.example.axon.demo.entity.ReponseObject;
-import com.example.axon.demo.repostory.DepartmentRepostory;
-import com.example.axon.demo.service.DepartmentService;
-import com.example.axon.demo.service.dto.DepartmentDTO;
+import com.axonactive.demo_spring.entity.Department;
+import com.axonactive.demo_spring.entity.ReponseObject;
+import com.axonactive.demo_spring.repostory.DepartmentRepostory;
+import com.axonactive.demo_spring.service.DepartmentService;
+import com.axonactive.demo_spring.service.dto.DepartmentDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

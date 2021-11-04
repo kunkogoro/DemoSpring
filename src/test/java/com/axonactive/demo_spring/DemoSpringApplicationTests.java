@@ -1,10 +1,10 @@
-package com.example.axon.demo;
+package com.axonactive.demo_spring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class DemoSpringApplicationTests {
 
 	@Test
 	void contextLoads() {

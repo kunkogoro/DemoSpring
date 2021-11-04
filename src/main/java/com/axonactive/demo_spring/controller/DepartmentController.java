@@ -1,12 +1,10 @@
-package com.example.axon.demo.controller;
+package com.axonactive.demo_spring.controller;
 
-import com.example.axon.demo.entity.Department;
-import com.example.axon.demo.entity.ReponseObject;
-import com.example.axon.demo.service.dto.DepartmentDTO;
+import com.axonactive.demo_spring.entity.ReponseObject;
+import com.axonactive.demo_spring.entity.Department;
+import com.axonactive.demo_spring.service.dto.DepartmentDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequestMapping("/department")
 public interface DepartmentController {

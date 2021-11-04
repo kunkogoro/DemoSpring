@@ -1,15 +1,12 @@
-package com.example.axon.demo.controller.implement;
+package com.axonactive.demo_spring.controller.implement;
 
-import com.example.axon.demo.controller.EmployeeController;
-import com.example.axon.demo.entity.Employee;
-import com.example.axon.demo.entity.ReponseObject;
-import com.example.axon.demo.service.EmployeeService;
-import com.example.axon.demo.service.dto.EmployeeDTO;
+import com.axonactive.demo_spring.controller.EmployeeController;
+import com.axonactive.demo_spring.entity.ReponseObject;
+import com.axonactive.demo_spring.service.EmployeeService;
+import com.axonactive.demo_spring.service.dto.EmployeeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

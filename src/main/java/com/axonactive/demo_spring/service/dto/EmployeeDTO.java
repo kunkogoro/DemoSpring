@@ -1,7 +1,6 @@
-package com.example.axon.demo.service.dto;
+package com.axonactive.demo_spring.service.dto;
 
-import com.example.axon.demo.entity.Department;
-import com.example.axon.demo.entity.GenderEnum;
+import com.axonactive.demo_spring.entity.GenderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.axon.demo.entity;
+package com.axonactive.demo_spring.entity;
 
 public enum GenderEnum {
     MALE,FEMALE

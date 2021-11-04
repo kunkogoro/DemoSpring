@@ -1,11 +1,8 @@
-package com.example.axon.demo.service;
+package com.axonactive.demo_spring.service;
 
-import com.example.axon.demo.entity.Employee;
-import com.example.axon.demo.entity.ReponseObject;
-import com.example.axon.demo.service.dto.EmployeeDTO;
+import com.axonactive.demo_spring.entity.ReponseObject;
+import com.axonactive.demo_spring.service.dto.EmployeeDTO;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface EmployeeService {
 

@@ -1,4 +1,4 @@
-package com.example.axon.demo.entity;
+package com.axonactive.demo_spring.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

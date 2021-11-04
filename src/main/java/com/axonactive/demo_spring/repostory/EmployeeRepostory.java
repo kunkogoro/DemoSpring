@@ -1,12 +1,11 @@
-package com.example.axon.demo.repostory;
+package com.axonactive.demo_spring.repostory;
 
-import com.example.axon.demo.entity.Department;
-import com.example.axon.demo.entity.Employee;
+import com.axonactive.demo_spring.entity.Department;
+import com.axonactive.demo_spring.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository

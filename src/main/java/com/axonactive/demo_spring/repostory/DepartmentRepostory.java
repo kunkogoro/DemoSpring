@@ -1,6 +1,6 @@
-package com.example.axon.demo.repostory;
+package com.axonactive.demo_spring.repostory;
 
-import com.example.axon.demo.entity.Department;
+import com.axonactive.demo_spring.entity.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

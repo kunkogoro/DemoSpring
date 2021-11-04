@@ -1,4 +1,4 @@
-package com.example.axon.demo.entity;
+package com.axonactive.demo_spring.entity;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;

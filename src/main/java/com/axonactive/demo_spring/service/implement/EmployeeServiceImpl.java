@@ -1,19 +1,17 @@
-package com.example.axon.demo.service.implement;
+package com.axonactive.demo_spring.service.implement;
 
-import com.example.axon.demo.entity.Department;
-import com.example.axon.demo.entity.Employee;
-import com.example.axon.demo.entity.ReponseObject;
-import com.example.axon.demo.repostory.DepartmentRepostory;
-import com.example.axon.demo.repostory.EmployeeRepostory;
-import com.example.axon.demo.service.EmployeeService;
-import com.example.axon.demo.service.dto.EmployeeDTO;
+import com.axonactive.demo_spring.entity.Department;
+import com.axonactive.demo_spring.entity.Employee;
+import com.axonactive.demo_spring.entity.ReponseObject;
+import com.axonactive.demo_spring.repostory.DepartmentRepostory;
+import com.axonactive.demo_spring.repostory.EmployeeRepostory;
+import com.axonactive.demo_spring.service.EmployeeService;
+import com.axonactive.demo_spring.service.dto.EmployeeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpStatusCodeException;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
