@@ -20,7 +20,7 @@ public class DepartmentControllerImpl implements DepartmentController {
     private final DepartmentService departmentService;
 
     @Override
-    public List<Department> getAllDepartment() {
+    public ResponseEntity<ReponseObject> getAllDepartment() {
         return departmentService.getAllDepartment();
     }
 
@@ -29,12 +29,12 @@ public class DepartmentControllerImpl implements DepartmentController {
         return departmentService.getDepartmentById(id);
     }
     @Override
-    public Department saveDepartment(DepartmentDTO department) {
+    public ResponseEntity<ReponseObject> saveDepartment(DepartmentDTO department) {
         return departmentService.saveDepartment(department);
     }
 
     @Override
-    public Department updateDepartment(Department department) {
+    public ResponseEntity<ReponseObject> updateDepartment(Department department) {
         return departmentService.updateDepartment(department);
     }
 

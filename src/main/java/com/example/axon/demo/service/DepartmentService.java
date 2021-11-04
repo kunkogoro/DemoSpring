@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface DepartmentService {
-    List<Department> getAllDepartment();
-    Department saveDepartment(DepartmentDTO departmentDTO);
+    ResponseEntity<ReponseObject>  getAllDepartment();
+    ResponseEntity<ReponseObject> saveDepartment(DepartmentDTO departmentDTO);
     ResponseEntity<ReponseObject> getDepartmentById(Long id);
-    Department updateDepartment(Department department);
+    ResponseEntity<ReponseObject> updateDepartment(Department department);
     ResponseEntity<ReponseObject> deleteDepartmentById(Long id);
 }

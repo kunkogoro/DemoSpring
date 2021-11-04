@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("/employee")
 public interface EmployeeController {
     @GetMapping
-    List<Employee> getAllEmployee();
+    ResponseEntity<ReponseObject> getAllEmployee();
 
     @PostMapping
     ResponseEntity<ReponseObject> saveEmployee(@RequestBody EmployeeDTO employeeDTO);

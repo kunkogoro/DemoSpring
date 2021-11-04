@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    List<Employee> getAllEmployee();
+    ResponseEntity<ReponseObject> getAllEmployee();
     ResponseEntity<ReponseObject> saveEmployee(EmployeeDTO employeeDTO);
     ResponseEntity<ReponseObject> getEmployeeById(Long id);
     ResponseEntity<ReponseObject> getAllEmployeeByDepartmentId(Long id);

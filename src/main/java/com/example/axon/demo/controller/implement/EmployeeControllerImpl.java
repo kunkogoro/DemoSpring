@@ -16,7 +16,7 @@ import java.util.List;
 public class EmployeeControllerImpl implements EmployeeController {
     private final EmployeeService employeeService;
     @Override
-    public List<Employee> getAllEmployee() {
+    public ResponseEntity<ReponseObject>  getAllEmployee() {
         return employeeService.getAllEmployee();
     }
 

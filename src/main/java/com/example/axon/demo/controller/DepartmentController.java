@@ -11,13 +11,13 @@ import java.util.List;
 @RequestMapping("/department")
 public interface DepartmentController {
     @GetMapping("")
-    List<Department> getAllDepartment();
+    ResponseEntity<ReponseObject> getAllDepartment();
     @GetMapping("/{id}")
     ResponseEntity<ReponseObject> getDepartmentById(@PathVariable Long id);
     @PostMapping
-    Department saveDepartment(@RequestBody DepartmentDTO department);
+    ResponseEntity<ReponseObject> saveDepartment(@RequestBody DepartmentDTO department);
     @PutMapping("")
-    Department updateDepartment(@RequestBody Department department);
+    ResponseEntity<ReponseObject> updateDepartment(@RequestBody Department department);
     @DeleteMapping("/{id}")
     ResponseEntity<ReponseObject> deleteDepartmentById(@PathVariable Long id);
 

@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +25,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepostory departmentRepostory;
 
     @Override
-    public List<Employee> getAllEmployee() {
-        return employeeRepostory.findAll();
+    public ResponseEntity<ReponseObject> getAllEmployee() {
+        List<Employee> employees = employeeRepostory.findAll();
+        return employees.size() == 0? ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Employee","")
+        ) : ResponseEntity.status(HttpStatus.FOUND).body(
+                new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Employee",employees)
+        );
     }
 
     @Override
@@ -45,17 +52,17 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.setDoB(employeeDTO.getDoB());
                 Employee employeeSave = employeeRepostory.save(employee);
                 return ResponseEntity.status(HttpStatus.OK).body(
-                        new ReponseObject("Save Success","Save Employee Success",employeeSave)
+                        new ReponseObject(String.valueOf(HttpStatus.OK),"Save Employee Success",employeeSave)
                 );
-            }catch (Exception e){
-                return ResponseEntity.status(HttpStatus.OK).body(
-                        new ReponseObject("Save Fail","Email must unique","")
+            }catch (Exception exception){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                        new ReponseObject(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR),exception.getMessage(),"")
                 );
             }
 
         }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-              new ReponseObject("Not Found","Not found Department with id " + employeeDTO.getDepartment(),"")
+              new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with id " + employeeDTO.getDepartment(),"")
             );
         }
     }
@@ -65,9 +72,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> employee = employeeRepostory.findById(id);
         return  employee.isPresent() ?
                 ResponseEntity.status(HttpStatus.OK).body(
-                        new ReponseObject("Found","Find Employee",employee)
+                        new ReponseObject(String.valueOf(HttpStatus.OK),"Found Employee",employee)
                 ):ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ReponseObject("Not found","Not find Employee with id = "+ id,"")
+                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Employee with id = "+ id,"")
         );
     }
 
@@ -79,13 +86,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             List<Employee> employees = employeeRepostory.findAllEmployeeByIdDepartment(department.get());
 
             return employees.size()==0?ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ReponseObject("Not Found","Not Find Departmant","")
+                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Departmant","")
             ):ResponseEntity.status(HttpStatus.FOUND).body(
-                    new ReponseObject("Found","Find Employee",employees)
+                    new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Employee",employees)
             );
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ReponseObject("Not Found","not Find Employee with id deparment = "+ id,"")
+                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"not Found Employee with id deparment = "+ id,"")
             );
         }
     }
@@ -96,10 +103,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> employeeOld = employeeRepostory.findById(id);
 
         if(employeeOld.isPresent()){
-            System.out.println("do 1");
             Optional<Department> department = departmentRepostory.findById(employeeDTO.getDepartment());
             if(department.isPresent()){
-                System.out.println("do 2");
                 Employee employeeSave = new Employee();
                 employeeSave.setId(id);
                 employeeSave.setFirstName(employeeDTO.getFirstName());
@@ -112,16 +117,14 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeSave.setDoB(employeeDTO.getDoB());
                 employeeRepostory.save(employeeSave);
                 return ResponseEntity.status(HttpStatus.OK).body(
-                  new ReponseObject("OK","Update Success",employeeSave)
+                  new ReponseObject(String.valueOf(HttpStatus.OK),"Update Success",employeeSave)
                 );
             }else{
-                System.out.println("do 3");
-                return ResponseEntity.status(HttpStatus.OK).body(
-                        new ReponseObject("Not Found","Not Found Department with id " + employeeDTO.getDepartment(),"")
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                        new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with id " + employeeDTO.getDepartment(),"")
                 );
             }
         } else{
-            System.out.println("do 4");
            return saveEmployee(employeeDTO);
         }
     }
@@ -131,11 +134,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(employeeRepostory.existsById(id)){
             employeeRepostory.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ReponseObject("ok","Delete Empoyee with id = " + id+ " success","")
+                    new ReponseObject(String.valueOf(HttpStatus.OK),"Delete Empoyee with id = " + id+ " success","")
             );
         }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ReponseObject("Fail","Not found Employee with " + id,"")
+                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not found Employee with " + id,"")
             );
         }
     }
