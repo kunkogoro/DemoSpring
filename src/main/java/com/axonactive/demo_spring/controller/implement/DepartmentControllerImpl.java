@@ -7,8 +7,12 @@ import com.axonactive.demo_spring.service.DepartmentService;
 import com.axonactive.demo_spring.service.dto.DepartmentDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+//@CrossOrigin(origins = "http://localhost:4200/")
 @RestController
 @RequiredArgsConstructor
 public class DepartmentControllerImpl implements DepartmentController {
@@ -19,6 +23,11 @@ public class DepartmentControllerImpl implements DepartmentController {
     public ResponseEntity<ReponseObject> getAllDepartment() {
         return departmentService.getAllDepartment();
     }
+
+//    @Override
+//    public List<Department> getAllDepartment() {
+//        return departmentService.getAllDepartment();
+//    }
 
     @Override
     public ResponseEntity<ReponseObject> getDepartmentById(Long id) {

@@ -25,9 +25,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ResponseEntity<ReponseObject> getAllEmployee() {
         List<Employee> employees = employeeRepostory.findAll();
-        return employees.size() == 0? ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+        return employees.size() == 0? ResponseEntity.ok().body(
                 new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Employee","")
-        ) : ResponseEntity.status(HttpStatus.FOUND).body(
+        ) : ResponseEntity.ok().body(
                 new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Employee",employees)
         );
     }
@@ -49,17 +49,17 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.setDepartment(department.get());
                 employee.setDoB(employeeDTO.getDoB());
                 Employee employeeSave = employeeRepostory.save(employee);
-                return ResponseEntity.status(HttpStatus.OK).body(
+                return ResponseEntity.ok().body(
                         new ReponseObject(String.valueOf(HttpStatus.OK),"Save Employee Success",employeeSave)
                 );
             }catch (Exception exception){
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                return ResponseEntity.ok().body(
                         new ReponseObject(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR),exception.getMessage(),"")
                 );
             }
 
         }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            return ResponseEntity.ok().body(
               new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with id " + employeeDTO.getDepartment(),"")
             );
         }
@@ -69,9 +69,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ResponseEntity<ReponseObject> getEmployeeById(Long id) {
         Optional<Employee> employee = employeeRepostory.findById(id);
         return  employee.isPresent() ?
-                ResponseEntity.status(HttpStatus.OK).body(
+                ResponseEntity.ok().body(
                         new ReponseObject(String.valueOf(HttpStatus.OK),"Found Employee",employee)
-                ):ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                ):ResponseEntity.ok().body(
                 new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Employee with id = "+ id,"")
         );
     }
@@ -83,13 +83,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(department.isPresent()){
             List<Employee> employees = employeeRepostory.findAllEmployeeByIdDepartment(department.get());
 
-            return employees.size()==0?ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            return employees.size()==0?ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Departmant","")
-            ):ResponseEntity.status(HttpStatus.FOUND).body(
+            ):ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Employee",employees)
             );
         }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            return ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"not Found Employee with id deparment = "+ id,"")
             );
         }
@@ -114,11 +114,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeSave.setAddress(employeeDTO.getAddress());
                 employeeSave.setDoB(employeeDTO.getDoB());
                 employeeRepostory.save(employeeSave);
-                return ResponseEntity.status(HttpStatus.OK).body(
+                return ResponseEntity.ok().body(
                   new ReponseObject(String.valueOf(HttpStatus.OK),"Update Success",employeeSave)
                 );
             }else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                return ResponseEntity.ok().body(
                         new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with id " + employeeDTO.getDepartment(),"")
                 );
             }
@@ -131,11 +131,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ResponseEntity<ReponseObject> deleteEmployeeById(Long id) {
         if(employeeRepostory.existsById(id)){
             employeeRepostory.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(
+            return ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(HttpStatus.OK),"Delete Empoyee with id = " + id+ " success","")
             );
         }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            return ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not found Employee with " + id,"")
             );
         }

@@ -22,12 +22,17 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public ResponseEntity<ReponseObject> getAllDepartment() {
         List<Department> departmentList = departmentRepostory.findAll();
-        return departmentList.size() == 0? ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+        return departmentList.size() == 0? ResponseEntity.ok().body(
                 new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department","")
-        ) : ResponseEntity.status(HttpStatus.FOUND).body(
+        ) : ResponseEntity.ok().body(
                 new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Department",departmentList)
         );
     }
+
+//    @Override
+//    public List<Department> getAllDepartment() {
+//        return departmentRepostory.findAll();
+//    }
 
     @Override
     public ResponseEntity<ReponseObject> saveDepartment(DepartmentDTO departmentDTO) {
@@ -35,11 +40,11 @@ public class DepartmentServiceImpl implements DepartmentService {
             Department department = new Department();
             department.setName(departmentDTO.getName());
             department.setLocation(departmentDTO.getLocation());
-            return ResponseEntity.status(HttpStatus.OK).body(
+            return ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(HttpStatus.OK),"Save success",departmentRepostory.save(department))
             );
         }catch (HttpStatusCodeException e){
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+            return ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(e.getStatusCode()),"Save Fail","")
             );
         }
@@ -50,9 +55,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public ResponseEntity<ReponseObject> getDepartmentById(Long id) {
         Optional<Department> department = departmentRepostory.findById(id);
        return  department.isPresent() ?
-           ResponseEntity.status(HttpStatus.FOUND).body(
+           ResponseEntity.ok().body(
               new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Departmant",department)
-            ):ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            ):ResponseEntity.ok().body(
               new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with id = "+ id,"")
             );
     }
@@ -65,11 +70,11 @@ public class DepartmentServiceImpl implements DepartmentService {
             departmentSave.setId(department.getId());
             departmentSave.setName(department.getName());
             departmentSave.setLocation(department.getLocation());
-            return ResponseEntity.status(HttpStatus.OK).body(
+            return ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(HttpStatus.OK),"Update Success",departmentRepostory.save(departmentSave))
             );
         }catch (HttpStatusCodeException s){
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+            return ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(s.getStatusCode()),"Update Fail","")
             );
         }
@@ -79,11 +84,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     public ResponseEntity<ReponseObject> deleteDepartmentById(Long id) {
         if(departmentRepostory.existsById(id)){
             departmentRepostory.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(
+            return ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(HttpStatus.OK),"Delete Department with id = " + id+ " success","")
             );
         }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            return ResponseEntity.ok().body(
                     new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with " + id,"")
             );
         }

@@ -6,10 +6,13 @@ import com.axonactive.demo_spring.service.dto.DepartmentDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/department")
 public interface DepartmentController {
     @GetMapping("")
     ResponseEntity<ReponseObject> getAllDepartment();
+//    List<Department> getAllDepartment();
     @GetMapping("/{id}")
     ResponseEntity<ReponseObject> getDepartmentById(@PathVariable Long id);
     @PostMapping
