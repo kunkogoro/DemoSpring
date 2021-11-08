@@ -47,4 +47,10 @@ public class DepartmentControllerImpl implements DepartmentController {
     public ResponseEntity<ReponseObject> deleteDepartmentById(Long id) {
         return departmentService.deleteDepartmentById(id);
     }
+
+    @Override
+    public ResponseEntity<ReponseObject> getPartDepartment(int min, int max, String search, String sort, String mainAttribute) {
+        return departmentService.getPartDepartment(min,max,search,sort,mainAttribute);
+    }
+
 }

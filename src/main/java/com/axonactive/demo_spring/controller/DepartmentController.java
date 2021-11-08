@@ -22,4 +22,13 @@ public interface DepartmentController {
     @DeleteMapping("/{id}")
     ResponseEntity<ReponseObject> deleteDepartmentById(@PathVariable Long id);
 
+    @GetMapping("/part")
+    ResponseEntity<ReponseObject> getPartDepartment(
+            @RequestParam() int min,
+            @RequestParam() int max,
+            @RequestParam() String search,
+            @RequestParam() String sort,
+            @RequestParam() String mainAttribute
+    );
+
 }

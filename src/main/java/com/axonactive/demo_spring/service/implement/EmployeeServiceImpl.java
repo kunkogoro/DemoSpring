@@ -8,6 +8,8 @@ import com.axonactive.demo_spring.repostory.EmployeeRepostory;
 import com.axonactive.demo_spring.service.EmployeeService;
 import com.axonactive.demo_spring.service.dto.EmployeeDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,10 +27,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ResponseEntity<ReponseObject> getAllEmployee() {
         List<Employee> employees = employeeRepostory.findAll();
-        return employees.size() == 0? ResponseEntity.ok().body(
-                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Employee","")
+        return employees.size() == 0 ? ResponseEntity.ok().body(
+                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Employee", "")
         ) : ResponseEntity.ok().body(
-                new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Employee",employees)
+                new ReponseObject(String.valueOf(HttpStatus.FOUND), "Found Employee", employees)
         );
     }
 
@@ -37,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Optional<Department> department = departmentRepostory.findById(employeeDTO.getDepartment());
 
-        if (department.isPresent()){
+        if (department.isPresent()) {
             try {
                 Employee employee = new Employee();
                 employee.setFirstName(employeeDTO.getFirstName());
@@ -50,17 +52,17 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.setDoB(employeeDTO.getDoB());
                 Employee employeeSave = employeeRepostory.save(employee);
                 return ResponseEntity.ok().body(
-                        new ReponseObject(String.valueOf(HttpStatus.OK),"Save Employee Success",employeeSave)
+                        new ReponseObject(String.valueOf(HttpStatus.OK), "Save Employee Success", employeeSave)
                 );
-            }catch (Exception exception){
+            } catch (Exception exception) {
                 return ResponseEntity.ok().body(
-                        new ReponseObject(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR),exception.getMessage(),"")
+                        new ReponseObject(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR), exception.getMessage(), "")
                 );
             }
 
-        }else {
+        } else {
             return ResponseEntity.ok().body(
-              new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with id " + employeeDTO.getDepartment(),"")
+                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Department with id " + employeeDTO.getDepartment(), "")
             );
         }
     }
@@ -68,11 +70,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ResponseEntity<ReponseObject> getEmployeeById(Long id) {
         Optional<Employee> employee = employeeRepostory.findById(id);
-        return  employee.isPresent() ?
+        return employee.isPresent() ?
                 ResponseEntity.ok().body(
-                        new ReponseObject(String.valueOf(HttpStatus.OK),"Found Employee",employee)
-                ):ResponseEntity.ok().body(
-                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Employee with id = "+ id,"")
+                        new ReponseObject(String.valueOf(HttpStatus.OK), "Found Employee", employee)
+                ) : ResponseEntity.ok().body(
+                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Employee with id = " + id, "")
         );
     }
 
@@ -80,29 +82,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ResponseEntity<ReponseObject> getAllEmployeeByDepartmentId(Long id) {
 
         Optional<Department> department = departmentRepostory.findById(id);
-        if(department.isPresent()){
+        if (department.isPresent()) {
             List<Employee> employees = employeeRepostory.findAllEmployeeByIdDepartment(department.get());
 
-            return employees.size()==0?ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Departmant","")
-            ):ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Employee",employees)
+            return employees.size() == 0 ? ResponseEntity.ok().body(
+                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Departmant", "")
+            ) : ResponseEntity.ok().body(
+                    new ReponseObject(String.valueOf(HttpStatus.FOUND), "Found Employee", employees)
             );
-        }else{
+        } else {
             return ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"not Found Employee with id deparment = "+ id,"")
+                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "not Found Employee with id deparment = " + id, "")
             );
         }
     }
 
     @Override
-    public ResponseEntity<ReponseObject> updateEmployee(EmployeeDTO employeeDTO,Long id) {
+    public ResponseEntity<ReponseObject> updateEmployee(EmployeeDTO employeeDTO, Long id) {
 
         Optional<Employee> employeeOld = employeeRepostory.findById(id);
 
-        if(employeeOld.isPresent()){
+        if (employeeOld.isPresent()) {
             Optional<Department> department = departmentRepostory.findById(employeeDTO.getDepartment());
-            if(department.isPresent()){
+            if (department.isPresent()) {
                 Employee employeeSave = new Employee();
                 employeeSave.setId(id);
                 employeeSave.setFirstName(employeeDTO.getFirstName());
@@ -115,29 +117,78 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeSave.setDoB(employeeDTO.getDoB());
                 employeeRepostory.save(employeeSave);
                 return ResponseEntity.ok().body(
-                  new ReponseObject(String.valueOf(HttpStatus.OK),"Update Success",employeeSave)
+                        new ReponseObject(String.valueOf(HttpStatus.OK), "Update Success", employeeSave)
                 );
-            }else{
+            } else {
                 return ResponseEntity.ok().body(
-                        new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with id " + employeeDTO.getDepartment(),"")
+                        new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Department with id " + employeeDTO.getDepartment(), "")
                 );
             }
-        } else{
-           return saveEmployee(employeeDTO);
+        } else {
+            return saveEmployee(employeeDTO);
         }
     }
 
     @Override
     public ResponseEntity<ReponseObject> deleteEmployeeById(Long id) {
-        if(employeeRepostory.existsById(id)){
+        if (employeeRepostory.existsById(id)) {
             employeeRepostory.deleteById(id);
             return ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(HttpStatus.OK),"Delete Empoyee with id = " + id+ " success","")
+                    new ReponseObject(String.valueOf(HttpStatus.OK), "Delete Empoyee with id = " + id + " success", "")
             );
-        }else {
+        } else {
             return ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not found Employee with " + id,"")
+                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not found Employee with " + id, "")
             );
         }
+    }
+
+    @Override
+    public ResponseEntity<ReponseObject> getPartEmployee(int min, int max, String search, String sort, String mainAttribute) {
+        Pageable range = PageRequest.of(min, max);
+        Optional<List<Employee>> optional = Optional.empty();
+        switch (mainAttribute) {
+            case "lastName":
+                if (sort.equals("asc")) {
+                    optional = employeeRepostory.findEmployeesByFirstNameLikeOrderByFirstNameAsc("%" + search + "%", range);
+                } else {
+                    optional = employeeRepostory.findEmployeesByFirstNameLikeOrderByFirstNameDesc("%" + search + "%", range);
+                }
+                break;
+            case "firstName":
+                if (sort.equals("asc")) {
+                    optional = employeeRepostory.findEmployeesByLastNameLikeOrderByLastNameAsc("%" + search + "%", range);
+                } else {
+                    optional = employeeRepostory.findEmployeesByLastNameLikeOrderByLastNameDesc("%" + search + "%", range);
+                }
+                break;
+            case "address":
+                if (sort.equals("asc")) {
+                    optional = employeeRepostory.findEmployeesByAddressLikeOrderByAddressAsc("%" + search + "%", range);
+                } else {
+                    optional = employeeRepostory.findEmployeesByAddressLikeOrderByAddressDesc("%" + search + "%", range);
+                }
+                break;
+            case "email":
+                if (sort.equals("asc")) {
+                    optional = employeeRepostory.findEmployeesByEmailLikeOrderByEmailAsc("%" + search + "%", range);
+                } else {
+                    optional = employeeRepostory.findEmployeesByEmailLikeOrderByEmailDesc("%" + search + "%", range);
+                }
+                break;
+            case "city":
+                if (sort.equals("asc")) {
+                    optional = employeeRepostory.findEmployeesByCityLikeOrderByCityAsc("%" + search + "%", range);
+                } else {
+                    optional = employeeRepostory.findEmployeesByCityLikeOrderByCityDesc("%" + search + "%", range);
+                }
+                break;
+        }
+        return optional.isPresent() ?
+                ResponseEntity.ok().body(
+                        new ReponseObject(String.valueOf(HttpStatus.FOUND), "Found Departmant", optional)
+                ) : ResponseEntity.ok().body(
+                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Department", "")
+        );
     }
 }
