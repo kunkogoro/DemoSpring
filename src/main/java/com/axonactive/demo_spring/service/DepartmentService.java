@@ -14,4 +14,7 @@ public interface DepartmentService {
     ResponseEntity<ReponseObject> getDepartmentById(Long id);
     ResponseEntity<ReponseObject> updateDepartment(Department department);
     ResponseEntity<ReponseObject> deleteDepartmentById(Long id);
+
+    ResponseEntity<ReponseObject> getPartDepartment(int min, int max, String search, String sort, String mainAttribute);
+
 }

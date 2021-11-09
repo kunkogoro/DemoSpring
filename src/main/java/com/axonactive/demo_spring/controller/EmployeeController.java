@@ -21,4 +21,13 @@ public interface EmployeeController {
     @GetMapping("/department/{id}")
     ResponseEntity<ReponseObject> getAllEmployeeByDepartmentId(@PathVariable Long id);
 
+    @GetMapping("/part")
+    ResponseEntity<ReponseObject> getPartEmployee(
+            @RequestParam() int min,
+            @RequestParam() int max,
+            @RequestParam() String search,
+            @RequestParam() String sort,
+            @RequestParam() String mainAttribute
+    );
+
 }

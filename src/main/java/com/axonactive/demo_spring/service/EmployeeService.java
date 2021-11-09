@@ -13,4 +13,5 @@ public interface EmployeeService {
     ResponseEntity<ReponseObject> updateEmployee(EmployeeDTO employeeDTO,Long id);
     ResponseEntity<ReponseObject> deleteEmployeeById(Long id);
 
+    ResponseEntity<ReponseObject> getPartEmployee(int min, int max, String search, String sort, String mainAttribute);
 }

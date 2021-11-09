@@ -6,6 +6,8 @@ import com.axonactive.demo_spring.repostory.DepartmentRepostory;
 import com.axonactive.demo_spring.service.DepartmentService;
 import com.axonactive.demo_spring.service.dto.DepartmentDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,13 +21,14 @@ import java.util.Optional;
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepostory departmentRepostory;
+
     @Override
     public ResponseEntity<ReponseObject> getAllDepartment() {
         List<Department> departmentList = departmentRepostory.findAll();
-        return departmentList.size() == 0? ResponseEntity.ok().body(
-                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department","")
+        return departmentList.size() == 0 ? ResponseEntity.ok().body(
+                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Department", "")
         ) : ResponseEntity.ok().body(
-                new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Department",departmentList)
+                new ReponseObject(String.valueOf(HttpStatus.FOUND), "Found Department", departmentList)
         );
     }
 
@@ -41,11 +44,11 @@ public class DepartmentServiceImpl implements DepartmentService {
             department.setName(departmentDTO.getName());
             department.setLocation(departmentDTO.getLocation());
             return ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(HttpStatus.OK),"Save success",departmentRepostory.save(department))
+                    new ReponseObject(String.valueOf(HttpStatus.OK), "Save success", departmentRepostory.save(department))
             );
-        }catch (HttpStatusCodeException e){
+        } catch (HttpStatusCodeException e) {
             return ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(e.getStatusCode()),"Save Fail","")
+                    new ReponseObject(String.valueOf(e.getStatusCode()), "Save Fail", "")
             );
         }
 
@@ -54,12 +57,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public ResponseEntity<ReponseObject> getDepartmentById(Long id) {
         Optional<Department> department = departmentRepostory.findById(id);
-       return  department.isPresent() ?
-           ResponseEntity.ok().body(
-              new ReponseObject(String.valueOf(HttpStatus.FOUND),"Found Departmant",department)
-            ):ResponseEntity.ok().body(
-              new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with id = "+ id,"")
-            );
+        return department.isPresent() ?
+                ResponseEntity.ok().body(
+                        new ReponseObject(String.valueOf(HttpStatus.FOUND), "Found Departmant", department)
+                ) : ResponseEntity.ok().body(
+                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Department with id = " + id, "")
+        );
     }
 
     @Override
@@ -71,26 +74,46 @@ public class DepartmentServiceImpl implements DepartmentService {
             departmentSave.setName(department.getName());
             departmentSave.setLocation(department.getLocation());
             return ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(HttpStatus.OK),"Update Success",departmentRepostory.save(departmentSave))
+                    new ReponseObject(String.valueOf(HttpStatus.OK), "Update Success", departmentRepostory.save(departmentSave))
             );
-        }catch (HttpStatusCodeException s){
+        } catch (HttpStatusCodeException s) {
             return ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(s.getStatusCode()),"Update Fail","")
+                    new ReponseObject(String.valueOf(s.getStatusCode()), "Update Fail", "")
             );
         }
     }
 
     @Override
     public ResponseEntity<ReponseObject> deleteDepartmentById(Long id) {
-        if(departmentRepostory.existsById(id)){
+        if (departmentRepostory.existsById(id)) {
             departmentRepostory.deleteById(id);
             return ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(HttpStatus.OK),"Delete Department with id = " + id+ " success","")
+                    new ReponseObject(String.valueOf(HttpStatus.OK), "Delete Department with id = " + id + " success", "")
             );
-        }else {
+        } else {
             return ResponseEntity.ok().body(
-                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND),"Not Found Department with " + id,"")
+                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Department with " + id, "")
             );
         }
     }
+
+    @Override
+    public ResponseEntity<ReponseObject> getPartDepartment(int min, int max, String search, String sort, String mainAttribute) {
+        Pageable range = PageRequest.of(min, max);
+        Optional<List<Department>> optional = null;
+        if (mainAttribute.equals("name")) {
+            if (sort.equals("asc")) {
+                optional = departmentRepostory.findDepartmentsByNameLikeOrderByNameAsc("%"+search+"%",range);
+            } else {
+                optional = departmentRepostory.findDepartmentsByNameLikeOrderByNameDesc("%"+search+"%",range);
+            }
+        } 
+        return optional.isPresent() ?
+                ResponseEntity.ok().body(
+                        new ReponseObject(String.valueOf(HttpStatus.FOUND), "Found Departmant", optional)
+                ) : ResponseEntity.ok().body(
+                new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Department", "")
+        );
+    }
+
 }

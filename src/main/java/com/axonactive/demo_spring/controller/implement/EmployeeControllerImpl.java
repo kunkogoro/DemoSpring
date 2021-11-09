@@ -41,4 +41,9 @@ public class EmployeeControllerImpl implements EmployeeController {
     public ResponseEntity<ReponseObject> getAllEmployeeByDepartmentId(Long id) {
         return employeeService.getAllEmployeeByDepartmentId(id);
     }
+
+    @Override
+    public ResponseEntity<ReponseObject> getPartEmployee(int min, int max, String search, String sort, String mainAttribute) {
+        return employeeService.getPartEmployee(min,max,search,sort,mainAttribute);
+    }
 }
