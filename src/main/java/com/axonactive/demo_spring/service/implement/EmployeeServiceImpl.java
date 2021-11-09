@@ -100,8 +100,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ResponseEntity<ReponseObject> updateEmployee(EmployeeDTO employeeDTO, Long id) {
 
+        Optional<Employee> employeeByEmail = employeeRepostory.findEmployeeByEmail(employeeDTO.getEmail());
+        if(employeeByEmail.isPresent()){
+            if(!employeeByEmail.get().getId().equals(id)){
+                return ResponseEntity.ok().body(
+                        new ReponseObject(String.valueOf(HttpStatus.EXPECTATION_FAILED), "Exists email", "")
+                );
+            }
+        }
         Optional<Employee> employeeOld = employeeRepostory.findById(id);
-
         if (employeeOld.isPresent()) {
             Optional<Department> department = departmentRepostory.findById(employeeDTO.getDepartment());
             if (department.isPresent()) {
@@ -150,16 +157,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         switch (mainAttribute) {
             case "lastName":
                 if (sort.equals("asc")) {
-                    optional = employeeRepostory.findEmployeesByFirstNameLikeOrderByFirstNameAsc("%" + search + "%", range);
+                    optional = employeeRepostory.findEmployeesByLastNameLikeOrderByLastNameAsc("%" + search + "%", range);
                 } else {
-                    optional = employeeRepostory.findEmployeesByFirstNameLikeOrderByFirstNameDesc("%" + search + "%", range);
+                    optional = employeeRepostory.findEmployeesByLastNameLikeOrderByLastNameDesc("%" + search + "%", range);
                 }
                 break;
             case "firstName":
                 if (sort.equals("asc")) {
-                    optional = employeeRepostory.findEmployeesByLastNameLikeOrderByLastNameAsc("%" + search + "%", range);
+                    optional = employeeRepostory.findEmployeesByFirstNameLikeOrderByFirstNameAsc("%" + search + "%", range);
                 } else {
-                    optional = employeeRepostory.findEmployeesByLastNameLikeOrderByLastNameDesc("%" + search + "%", range);
+                    optional = employeeRepostory.findEmployeesByFirstNameLikeOrderByFirstNameDesc("%" + search + "%", range);
                 }
                 break;
             case "address":

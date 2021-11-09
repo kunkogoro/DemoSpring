@@ -35,4 +35,6 @@ public interface EmployeeRepostory extends JpaRepository<Employee, Long> {
 
     Optional<List<Employee>> findEmployeesByEmailLikeOrderByEmailDesc(String email, Pageable range);
 
+    Optional<Employee> findEmployeeByEmail(String email);
+
 }
