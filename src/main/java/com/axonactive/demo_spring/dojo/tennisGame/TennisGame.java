@@ -49,13 +49,29 @@ public class TennisGame {
         return false;
     }
 
-    public String getWinner() {
+
+    public boolean isDuece() {
+        if (isBothGreater2Score()&&(player1Score==player2Score))
+           return true;
+        return false;
+    }
+
+    public boolean isAdvantage() {
+        if (isBothGreater2Score())
+            if (Math.abs(player1Score - player2Score) == 1)
+                return true;
+        return false;
+
+    }
+
+
+
+    public String getWhoHigher() {
         return player1Score>player2Score?player1Name:player2Name;
     }
 
-    public boolean isDuece() {
-        if ((player1Score >=3 || player2Score >=3)&&(player1Score==player2Score))
-           return true;
-        return false;
+    public boolean isBothGreater2Score() {
+
+        return player1Score >=3 && player2Score >=3;
     }
 }

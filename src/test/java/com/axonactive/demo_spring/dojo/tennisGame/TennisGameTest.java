@@ -49,15 +49,7 @@ public class TennisGameTest {
         tennisGame1.player2Score();
         assertTrue(tennisGame1.isEndGame());
     }
-    @Test
-    void testGetWinner(){
-        TennisGame tennisGame =  new TennisGame("Ha", "Vien");
-        tennisGame.player1Score();
-        tennisGame.player1Score();
-        tennisGame.player1Score();
-        tennisGame.player1Score();
-        assertEquals("Ha",tennisGame.getWinner());
-    }
+
     @Test
     void testIsDeuce(){
         TennisGame tennisGame =  new TennisGame("Ha", "Vien");
@@ -76,4 +68,62 @@ public class TennisGameTest {
         tennisGame.player2Score();
         assertTrue(tennisGame.isDuece());
     }
+
+    @Test
+    void testIsAdvantage(){
+        TennisGame tennisGame =  new TennisGame("Ha", "Vien");
+        tennisGame.player1Score();
+        tennisGame.player1Score();
+        tennisGame.player1Score();
+
+
+        tennisGame.player2Score();
+        tennisGame.player2Score();
+        tennisGame.player2Score();
+
+        tennisGame.player1Score();
+
+        assertTrue(tennisGame.isAdvantage());
+
+        tennisGame.player2Score();
+
+        assertFalse(tennisGame.isAdvantage());
+    }
+
+    @Test
+    void testGetWhoHigher(){
+        TennisGame tennisGame =  new TennisGame("Ha", "Vien");
+        tennisGame.player1Score();
+        tennisGame.player1Score();
+        tennisGame.player1Score();
+
+
+        tennisGame.player2Score();
+        tennisGame.player2Score();
+        tennisGame.player2Score();
+
+        tennisGame.player1Score();
+
+        assertEquals("Ha",tennisGame.getWhoHigher());
+
+    }
+
+    @Test
+    void testIsBothGreater2Score(){
+        TennisGame tennisGame =  new TennisGame("Ha", "Vien");
+        tennisGame.player1Score();
+        tennisGame.player1Score();
+        tennisGame.player1Score();
+
+        assertFalse(tennisGame.isBothGreater2Score());
+
+        tennisGame.player2Score();
+        tennisGame.player2Score();
+        tennisGame.player2Score();
+
+        tennisGame.player2Score();
+
+        assertTrue(tennisGame.isBothGreater2Score());
+    }
+
 }
