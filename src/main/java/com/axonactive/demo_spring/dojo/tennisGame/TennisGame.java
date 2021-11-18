@@ -4,8 +4,8 @@ public class TennisGame {
 
     private int player1Score;
     private int player2Score;
-    private String player1Name;
-    private String player2Name;
+    private final String player1Name;
+    private final String player2Name;
 
     public TennisGame(String player1Name, String player2Name) {
         this.player1Name = player1Name;
@@ -15,6 +15,15 @@ public class TennisGame {
     }
 
     public String showResult() {
+        if (isEndGame()) {
+            return getWhoHigher() + " win";
+        }
+        if (isAdvantage()) {
+            return getWhoHigher() + " advantage";
+        }
+        if (isDuece()) {
+            return "Duece";
+        }
         String scorePlayer1 = covertScoreToString(player1Score);
         String scorePlayer2 = covertScoreToString(player2Score);
         return player1Name + " " + scorePlayer1 + ":" + scorePlayer2 + " " + player2Name;
@@ -38,40 +47,34 @@ public class TennisGame {
         player2Score++;
     }
 
-    public int getPlayer1Score(){
+    public int getPlayer1Score() {
         return player1Score;
     }
 
     public boolean isEndGame() {
-        if (player1Score >=4 || player2Score >=4)
-            if (Math.abs(player1Score - player2Score) >= 2)
-                return true;
+        if (player1Score >= 4 || player2Score >= 4)
+            return Math.abs(player1Score - player2Score) >= 2;
         return false;
     }
 
 
     public boolean isDuece() {
-        if (isBothGreater2Score()&&(player1Score==player2Score))
-           return true;
-        return false;
+        return isBothGreater2Score() && (player1Score == player2Score);
     }
 
     public boolean isAdvantage() {
         if (isBothGreater2Score())
-            if (Math.abs(player1Score - player2Score) == 1)
-                return true;
+            return Math.abs(player1Score - player2Score) == 1;
         return false;
-
     }
 
 
-
     public String getWhoHigher() {
-        return player1Score>player2Score?player1Name:player2Name;
+        return player1Score > player2Score ? player1Name : player2Name;
     }
 
     public boolean isBothGreater2Score() {
 
-        return player1Score >=3 && player2Score >=3;
+        return player1Score >= 3 && player2Score >= 3;
     }
 }

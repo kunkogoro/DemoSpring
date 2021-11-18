@@ -126,4 +126,58 @@ public class TennisGameTest {
         assertTrue(tennisGame.isBothGreater2Score());
     }
 
+    @Test
+    void testShowResult(){
+        TennisGame tennisGame =  new TennisGame("Ha", "Vien");
+        tennisGame.player1Score();
+        tennisGame.player1Score();
+        tennisGame.player1Score();
+        assertEquals("Ha forty:love Vien",tennisGame.showResult());
+        tennisGame.player2Score();
+        assertEquals("Ha forty:fifteen Vien",tennisGame.showResult());
+        tennisGame.player2Score();
+        assertEquals("Ha forty:thirty Vien",tennisGame.showResult());
+        tennisGame.player2Score();
+        assertEquals("Duece",tennisGame.showResult());
+        tennisGame.player1Score();
+        assertEquals("Ha advantage",tennisGame.showResult());
+        tennisGame.player1Score();
+        assertEquals("Ha win",tennisGame.showResult());
+    }
+
+    @Test
+    void testPlayGame(){
+        TennisGame tennisGame =  new TennisGame("Huy", "Vien");
+        tennisGame.player2Score();
+        System.out.println(tennisGame.showResult());
+        tennisGame.player2Score();
+        System.out.println(tennisGame.showResult());
+
+        tennisGame.player1Score();
+        System.out.println(tennisGame.showResult());
+
+        tennisGame.player2Score();
+        System.out.println(tennisGame.showResult());
+
+        tennisGame.player1Score();
+        System.out.println(tennisGame.showResult());
+        tennisGame.player1Score();
+        System.out.println(tennisGame.showResult());
+
+        tennisGame.player2Score();
+        System.out.println(tennisGame.showResult());
+
+        tennisGame.player1Score();
+        System.out.println(tennisGame.showResult());
+
+        tennisGame.player2Score();
+        System.out.println(tennisGame.showResult());
+
+        tennisGame.player1Score();
+        System.out.println(tennisGame.showResult());
+
+        tennisGame.player1Score();
+        System.out.println(tennisGame.showResult());
+    }
+
 }
