@@ -42,4 +42,20 @@ public class TennisGame {
         return player1Score;
     }
 
+    public boolean isEndGame() {
+        if (player1Score >=4 || player2Score >=4)
+            if (Math.abs(player1Score - player2Score) >= 2)
+                return true;
+        return false;
+    }
+
+    public String getWinner() {
+        return player1Score>player2Score?player1Name:player2Name;
+    }
+
+    public boolean isDuece() {
+        if ((player1Score >=3 || player2Score >=3)&&(player1Score==player2Score))
+           return true;
+        return false;
+    }
 }
