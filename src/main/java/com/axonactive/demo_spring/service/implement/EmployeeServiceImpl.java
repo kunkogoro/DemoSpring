@@ -101,8 +101,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ResponseEntity<ReponseObject> updateEmployee(EmployeeDTO employeeDTO, Long id) {
 
         Optional<Employee> employeeByEmail = employeeRepostory.findEmployeeByEmail(employeeDTO.getEmail());
-        if(employeeByEmail.isPresent()){
-            if(!employeeByEmail.get().getId().equals(id)){
+        if (employeeByEmail.isPresent()) {
+            if (!employeeByEmail.get().getId().equals(id)) {
                 return ResponseEntity.ok().body(
                         new ReponseObject(String.valueOf(HttpStatus.EXPECTATION_FAILED), "Exists email", "")
                 );
@@ -197,5 +197,19 @@ public class EmployeeServiceImpl implements EmployeeService {
                 ) : ResponseEntity.ok().body(
                 new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Not Found Department", "")
         );
+    }
+
+    @Override
+    public ResponseEntity<ReponseObject> getEmployeeByEmail(String email,Long id) {
+        Optional<Employee> employeeByEmail = employeeRepostory.findEmployeeByEmailAndIdNot(email,id);
+        if (employeeByEmail.isPresent()) {
+            return ResponseEntity.ok().body(
+                    new ReponseObject(String.valueOf(HttpStatus.FOUND), "Exists email", employeeByEmail)
+            );
+        } else {
+            return ResponseEntity.ok().body(
+                    new ReponseObject(String.valueOf(HttpStatus.NOT_FOUND), "Oke", "")
+            );
+        }
     }
 }

@@ -43,6 +43,11 @@ public class EmployeeControllerImpl implements EmployeeController {
     }
 
     @Override
+    public ResponseEntity<ReponseObject> getEmployeeByEmail(String email, Long id) {
+        return employeeService.getEmployeeByEmail(email,id);
+    }
+
+    @Override
     public ResponseEntity<ReponseObject> getPartEmployee(int min, int max, String search, String sort, String mainAttribute) {
         return employeeService.getPartEmployee(min,max,search,sort,mainAttribute);
     }

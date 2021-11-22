@@ -12,14 +12,22 @@ public interface EmployeeController {
 
     @PostMapping
     ResponseEntity<ReponseObject> saveEmployee(@RequestBody EmployeeDTO employeeDTO);
+
     @GetMapping("/{id}")
     ResponseEntity<ReponseObject> getEmployeeById(@PathVariable Long id);
+
     @PutMapping("/{id}")
-    ResponseEntity<ReponseObject> updateEmployee(@RequestBody EmployeeDTO employeeDTO,@PathVariable Long id);
+    ResponseEntity<ReponseObject> updateEmployee(@RequestBody EmployeeDTO employeeDTO, @PathVariable Long id);
+
     @DeleteMapping("/{id}")
     ResponseEntity<ReponseObject> deleteEmployeeById(@PathVariable Long id);
+
     @GetMapping("/department/{id}")
     ResponseEntity<ReponseObject> getAllEmployeeByDepartmentId(@PathVariable Long id);
+
+    @GetMapping("/find")
+    ResponseEntity<ReponseObject> getEmployeeByEmail(@RequestParam() String email,
+                                                     @RequestParam() Long id);
 
     @GetMapping("/part")
     ResponseEntity<ReponseObject> getPartEmployee(

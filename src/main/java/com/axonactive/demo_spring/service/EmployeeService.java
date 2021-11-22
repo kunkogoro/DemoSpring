@@ -14,4 +14,6 @@ public interface EmployeeService {
     ResponseEntity<ReponseObject> deleteEmployeeById(Long id);
 
     ResponseEntity<ReponseObject> getPartEmployee(int min, int max, String search, String sort, String mainAttribute);
+
+    ResponseEntity<ReponseObject> getEmployeeByEmail(String email,Long id);
 }
