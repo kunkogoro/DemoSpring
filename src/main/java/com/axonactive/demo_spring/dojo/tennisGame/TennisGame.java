@@ -30,13 +30,14 @@ public class TennisGame {
     }
 
     public String covertScoreToString(int score) {
-        return switch (score) {
-            case 0 -> "love";
-            case 1 -> "fifteen";
-            case 2 -> "thirty";
-            case 3 -> "forty";
-            default -> "";
-        };
+        if (score == 0) {
+            return "love";
+        } else if (score == 1) {
+            return "fifteen";
+        } else if (score == 2) {
+            return "thirty";
+        }
+        return "forty";
     }
 
     public void player1Score() {
